@@ -1,0 +1,58 @@
+<% content_for :title, "Pembukuan Bulanan" %>
+
+<h1 class="text-xl font-bold mb-4">Pembukuan Bulanan</h1>
+
+<!-- Tombol Tambah -->
+<div class="mt-4">
+  <%= link_to "Tambah Pembukuan", new_admin_bookkeeping_path, class: "w-full bg-[#012f2f] hover:bg-[#024646] text-white font-semibold p-2 rounded-lg transition-colors duration-200" %>
+  <%= link_to "🖨 Cetak", "#", onclick: "window.print()", class: "mt-6 inline-block bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800" %>
+</div>
+</br>
+
+<!-- Filter Bulan -->
+<div class="mb-4">
+  <%= form_with url: admin_bookkeepings_path, method: :get, local: true do %>
+    <label for="month" class="mr-2 font-semibold">Pilih Bulan:</label>
+    <%= month_field_tag :month, @month.strftime('%Y-%m'), onchange: "this.form.submit()", class: "border rounded px-2 py-1" %>
+  <% end %>
+</div>
+
+<!-- Daftar Bookkeeping -->
+<% if @bookkeepings.any? %>
+  <table class="w-full border border-gray-400 text-sm">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="border border-gray-400 px-2 py-1">No</th>
+        <th class="border border-gray-400 px-2 py-1">Date</th>
+        <th class="border border-gray-400 px-2 py-1">Category</th>
+        <th class="border border-gray-400 px-2 py-1">Description</th>
+        <th class="border border-gray-400 px-2 py-1 text-center" colspan="2">Amount</th>
+      </tr>
+      <tr class="bg-gray-100">
+        <th colspan="4"></th>
+        <th class="border border-gray-400 px-2 py-1 text-center">Masuk</th>
+        <th class="border border-gray-400 px-2 py-1 text-center">Keluar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bookkeepings.each_with_index do |bookkeeping, index| %>
+        <tr>
+          <td class="border border-gray-400 px-2 py-1 text-center"><%= index + 1 %></td>
+          <td class="border border-gray-400 px-2 py-1"><%= bookkeeping.date.strftime("%d-%m-%Y") %></td>
+          <td class="border border-gray-400 px-2 py-1"><%= bookkeeping.category.titleize %></td>
+          <td class="border border-gray-400 px-2 py-1"><%= bookkeeping.description %></td>
+          <% if bookkeeping.status == "masuk" %>
+            <td class="border border-gray-400 px-2 py-1 text-right"><%= number_to_currency(bookkeeping.amount, unit: "Rp", separator: ",", delimiter: ".") %></td>
+            <td class="border border-gray-400 px-2 py-1"></td>
+          <% else %>
+            <td class="border border-gray-400 px-2 py-1"></td>
+            <td class="border border-gray-400 px-2 py-1 text-right"><%= number_to_currency(bookkeeping.amount, unit: "Rp", separator: ",", delimiter: ".") %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="text-gray-500 italic">Tidak ada data pembukuan untuk bulan ini.</p>
+<% end %>
+

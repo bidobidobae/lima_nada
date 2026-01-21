@@ -1,0 +1,117 @@
+<% content_for :title, "Profil Siswa" %>
+
+<div class="max-w-4xl mx-auto p-6 bg-white shadow rounded-lg mt-6">
+  <!-- Profil Student -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-2"><%= @student.name.humanize %></h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 text-sm text-gray-700">
+      <%# Tanggal Lahir %>
+      <div>
+        <span class="font-semibold">Tanggal Lahir:</span>
+        <%= @student.birth_date.present? ? l(@student.birth_date, format: :long) : "-" %>
+      </div>
+
+      <%# Tanggal Bergabung %>
+      <div>
+        <span class="font-semibold">Tanggal Bergabung:</span>
+        <%= @student.joined_at.present? ? l(@student.joined_at, format: :long) : "-" %>
+      </div>
+
+      <%# Diagnosis %>
+      <div>
+        <span class="font-semibold">Diagnosis:</span>
+        <%= @student.diagnosis.present? ? @student.diagnosis.titleize : "-" %>
+      </div>
+
+      <%# Keanggotaan %>
+      <div>
+        <span class="font-semibold">Keanggotaan:</span>
+        <%= @student.keanggotaan.presence || "-" %>
+      </div>
+
+      <%# Nama Orang Tua %>
+      <div>
+        <span class="font-semibold">Nama Orang Tua:</span>
+        <%= @student.parent_name.presence || "-" %>
+      </div>
+
+      <div>
+        <span class="font-semibold">Contact Person:</span>
+        <%= @student.contact_person.presence || "-" %>
+      </div>
+
+      <%# Email Kontak %>
+      <div>
+        <span class="font-semibold">Email Kontak:</span>
+        <%= @student.contact_email.presence || "-" %>
+      </div>
+
+      <%# Media Sosial %>
+      <div>
+        <span class="font-semibold">Media Sosial:</span>
+        <%= @student.social_media.presence || "-" %>
+      </div>
+
+      <%# Alamat %>
+      <div class="sm:col-span-2">
+        <span class="font-semibold">Alamat:</span><br>
+        <%= simple_format(@student.address.presence || "-") %>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Info Invoice Terakhir -->
+  <% if @student.invoices.last.present? %>
+    <% invoice = @student.invoices.last %>
+    <div class="mb-6 bg-gray-50 p-4 rounded-md border border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-700 mb-2">Invoice Terakhir</h2>
+      <p class="text-gray-700">Status:
+        <span class="px-2 py-1 rounded-md text-sm font-medium <%= invoice.paid? ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' %>">
+          <%= invoice.status.humanize %>
+        </span>
+      </p>
+      <p class="text-gray-700">Jumlah:
+        <span class="font-semibold text-indigo-600"><%= number_to_currency(invoice.amount, unit: "Rp. ", separator: ",", delimiter: ".") %></span>
+      </p>
+    </div>
+
+    <!-- Kalender Pertemuan -->
+    <div class="bg-white shadow rounded-lg p-4">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Kalender Pertemuan</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <% invoice.attendances.each do |attendance| %>
+          <turbo-frame id="<%= dom_id(attendance) %>">
+            <div class="p-4 border rounded-lg bg-gray-50 shadow-sm hover:shadow-md transition duration-200">
+              <p class="text-sm text-gray-500">Tanggal</p>
+              <p class="font-medium text-gray-900 mb-2"><%= l(attendance.meeting_date, format: :long) %></p>
+
+              <p class="text-sm text-gray-500">Status Kehadiran</p>
+              <p class="mb-2 font-semibold <%= attendance.status == "present" ? "text-green-600" : attendance.status == "absent" ? "text-red-600" : "text-gray-500" %>">
+                <%= attendance.status&.capitalize || "Belum diisi" %>
+              </p>
+
+              <p class="text-sm text-gray-500">Guru</p>
+              <p class="text-gray-800 font-medium">
+                <%= attendance.user&.email || "Belum ditentukan" %>
+              </p>
+
+              <%= link_to "Edit", edit_student_attendance_path(@student, attendance), data: { turbo_frame: dom_id(attendance) }, class: "text-blue-600 text-sm mt-2 inline-block hover:underline" %>
+            </div>
+          </turbo-frame>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <p class="text-gray-500 italic mt-4">Belum ada invoice atau jadwal pertemuan.</p>
+  <% end %>
+
+  <!-- Actions -->
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Edit Siswa", edit_student_path(@student), class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+    <%= link_to "Kembali", students_path, class: "bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" %>
+    <%= button_to "Hapus Siswa", @student, method: :delete, data: { confirm: "Yakin ingin menghapus siswa ini?" }, class: "bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
+  </div>
+</div>

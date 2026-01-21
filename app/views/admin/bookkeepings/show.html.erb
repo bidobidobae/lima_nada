@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @bookkeeping %>
+
+<div>
+  <%= link_to "Edit this bookkeeping", edit_admin_bookkeeping_path(@bookkeeping) %> |
+  <%= link_to "Back to bookkeepings", admin_bookkeepings_path %>
+
+  <%= link_to "Hapus", admin_bookkeeping_path(@bookkeeping), method: :delete, data: { confirm: "Yakin ingin menghapus?" }, class: "text-red-600 underline" %>
+</div>

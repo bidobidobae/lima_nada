@@ -1,0 +1,41 @@
+<%= form_with model: [:admin, @bookkeeping], local: true, class: "space-y-6 bg-white p-6 rounded shadow-md max-w-xl mx-auto" do |form| %>
+  <% if @bookkeeping.errors.any? %>
+    <div class="bg-red-100 text-red-700 p-4 rounded">
+      <h2 class="font-semibold"><%= pluralize(@bookkeeping.errors.count, "error") %> prohibited this bookkeeping from being saved:</h2>
+      <ul class="list-disc list-inside mt-2">
+        <% @bookkeeping.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :date, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.date_field :date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= form.label :amount, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.number_field :amount, step: "0.01", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= form.label :status, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :status, Bookkeeping.statuses.keys.map { |k| [k.humanize, k] }, {}, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= form.label :category, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.select :category, Bookkeeping.categories.keys.map { |k| [k.humanize, k] }, {}, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_area :description, rows: 3, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm" %>
+  </div>
+
+  <div>
+    <%= form.submit class: "w-full bg-[#012f2f] hover:bg-[#024646] text-white font-semibold py-2 rounded-lg transition-colors duration-200" %>
+  </div>
+<% end %>

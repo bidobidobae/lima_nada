@@ -1,0 +1,64 @@
+<!-- app/views/pages/index.html.erb -->
+
+<!-- Hero Section -->
+<section class="relative bg-[#023535] text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center py-20 md:py-32 gap-10">
+    <!-- Left Text -->
+    <div class="w-full md:w-1/2 text-center md:text-left">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4">Musik untuk Semua</h1>
+      <p class="text-lg md:text-xl mb-6">Dari pendidikan hingga sertifikasi musik kami hadir untuk semua - anak, dewasa, disablilitas dan komunitas.</p>
+      <%= link_to "Gabung Sekarang", "#pendaftaran", class: "inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded" %>
+    </div>
+    <!-- Right Image -->
+    <div class="w-full md:w-1/2">
+      <img src="https://via.placeholder.com/500x400?text=Ilustrasi" alt="Ilustrasi Hero" class="mx-auto w-full h-auto max-w-md md:max-w-lg">
+    </div>
+  </div>
+</section>
+
+<!-- Tentang Kami -->
+<section id="tentang" class="bg-[#012f2f] text-white py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8">Tentang Kami</h2>
+    <div class="flex flex-col md:flex-row items-center gap-8">
+      <img src="https://via.placeholder.com/400x300?text=Gambar+Tentang+Kami" alt="Tentang Kami" class="rounded-lg shadow-lg w-full md:w-1/2">
+      <p class="md:w-1/2 text-lg">Yayasan Pendidikan Musik Lima Nada dan Sangsat inklusif Waktara menyalurkan akses musik bagi anak-anak, dewasa, dan penyandang disabilitas melalui pelatihan dan sertifikasi yang menyenangkan dan profesional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Program -->
+<section id="program" class="bg-[#011d1d] text-white py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-10 text-center">Program</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-[#04738c] p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-bold mb-2">🎵 Kursus</h3>
+        <p class="mb-4">Pelatihan musik dasar dan lanjutan untuk semua kalangan.</p>
+        <%= link_to "Lihat Detail", "#", class: "text-white underline hover:text-orange-300" %>
+      </div>
+      <div class="bg-[#b9ce93] p-6 rounded-lg text-black shadow-md">
+        <h3 class="text-xl font-bold mb-2">🎓 Sertifikasi</h3>
+        <p class="mb-4">Program ujian & sertifikasi keterampilan musik resmi.</p>
+        <%= link_to "Lihat Detail", "#", class: "text-black underline hover:text-blue-800" %>
+      </div>
+      <div class="bg-[#da532c] p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-bold mb-2">🙌 Relawan</h3>
+        <p class="mb-4">Bergabunglah menjadi relawan dan bantu misi inklusi musik.</p>
+        <%= link_to "Lihat Detail", "#", class: "text-white underline hover:text-orange-300" %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Galeri -->
+<section id="galeri" class="bg-[#023535] text-white py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold mb-10 text-center">Galeri</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <% 6.times do %>
+        <img src="https://via.placeholder.com/400x250?text=Galeri" alt="Galeri" class="rounded-lg shadow-md w-full">
+      <% end %>
+    </div>
+  </div>
+</section>

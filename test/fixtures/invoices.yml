@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  student: one
+  meeting_date_1: 2025-06-03
+  meeting_date_2: 2025-06-03
+  meeting_date_3: 2025-06-03
+  meeting_date_4: 2025-06-03
+  amount: 9.99
+  status: MyString
+
+two:
+  user: two
+  student: two
+  meeting_date_1: 2025-06-03
+  meeting_date_2: 2025-06-03
+  meeting_date_3: 2025-06-03
+  meeting_date_4: 2025-06-03
+  amount: 9.99
+  status: MyString

@@ -1,0 +1,20 @@
+<turbo-frame id="attendance_<%= @attendance.id %>">
+  <%= form_with(model: [@attendance.student, @attendance], data: { turbo_frame: dom_id(@attendance) }, class: "space-y-4") do |f| %>
+    <div>
+      <%= f.label :status, "Status Kehadiran", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :status, [["Hadir", "hadir"], ["Alpa", "alpa"]], { include_blank: true }, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+    </div>
+
+    <div>
+      <%= f.label :user_id, "Guru Pengajar", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.collection_select :user_id, User.where(role: :teacher), :id, :email, { include_blank: "Pilih Guru" }, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+    </div>
+
+    <div class="flex items-center space-x-2">
+      <%= f.submit "Simpan", class: "bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-sm" %>
+      <%= link_to "Batal", student_path(@attendance.student), class: "text-sm text-gray-500 hover:underline" %>
+    </div>
+  <% end %>
+
+</turbo-frame>
+

@@ -1,0 +1,80 @@
+<%= form_with model: @student, local: true, class: "max-w-2xl mx-auto mt-10 bg-white p-8 shadow-md rounded-xl" do |f| %>
+  <h2 class="text-2xl font-bold text-gray-800 mb-6"><%= @student.new_record? ? "New Student" : "Edit Student" %></h2>
+
+  <% if @student.errors.any? %>
+    <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+      <p class="font-semibold"><%= pluralize(@student.errors.count, "error") %> prohibited this student from being saved:</p>
+      <ul class="mt-2 list-disc list-inside">
+        <% @student.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Nama -->
+  <div class="mb-4">
+    <%= f.label :name, "Name", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Tanggal Lahir -->
+  <div class="mb-4">
+    <%= f.label :birth_date, "Tanggal Lahir", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.date_field :birth_date, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Tanggal Bergabung -->
+  <div class="mb-4">
+    <%= f.label :joined_at, "Tanggal Bergabung", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.date_field :joined_at, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Diagnosis -->
+  <div class="mb-4">
+    <%= f.label :diagnosis, "Diagnosis", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :diagnosis, Student.diagnoses.keys.map { |d| [d.titleize, d] }, { prompt: "Pilih diagnosis" }, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Keanggotaan -->
+  <div class="mb-4">
+    <%= f.label :keanggotaan, "Kelas", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :keanggotaan, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Nama Orang Tua -->
+  <div class="mb-4">
+    <%= f.label :parent_name, "Nama Orang Tua", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :parent_name, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Contact Person -->
+  <div class="mb-4">
+    <%= f.label :contact_person, "Contact Person", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :contact_person, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Alamat -->
+  <div class="mb-4">
+    <%= f.label :address, "Alamat", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :address, rows: 3, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Media Sosial -->
+  <div class="mb-4">
+    <%= f.label :social_media, "Media Sosial", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :social_media, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Email Kontak -->
+  <div class="mb-4">
+    <%= f.label :contact_email, "Email Kontak", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.email_field :contact_email, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" %>
+  </div>
+
+  <!-- Submit -->
+  <div class="mt-6">
+    <%= f.submit "Simpan", class: "w-full bg-[#012f2f] hover:bg-[#024646] text-white font-semibold py-2 rounded-lg transition-colors duration-200" %>
+  </div>
+<% end %>
+

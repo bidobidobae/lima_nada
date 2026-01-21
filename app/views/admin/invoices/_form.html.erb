@@ -1,0 +1,48 @@
+<%= form_with model: [:admin, @invoice], local: true, class: "max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md space-y-6" do |f| %>
+  <% if @invoice.errors.any? %>
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
+      <p class="font-bold"><%= pluralize(@invoice.errors.count, "error") %> mencegah penyimpanan:</p>
+      <ul class="list-disc pl-5">
+        <% @invoice.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :student_id, "Siswa", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.collection_select :student_id, Student.all, :id, :name,
+          prompt: "-- Pilih Siswa --",
+          class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :amount, "Jumlah Tagihan (Rp)", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.number_field :amount, step: 1000, min: 0,
+          class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :status, "Status Pembayaran", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :status, Invoice.statuses.keys.map { |s| [s.humanize, s] },
+          {}, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <% (1..4).each do |i| %>
+      <div>
+        <%= f.label "meeting_date_#{i}", "Pertemuan #{i}", class: "block text-sm font-medium text-gray-700" %>
+        <%= f.date_field "meeting_date_#{i}",
+              class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="pt-4">
+    <%= f.submit class: "w-full bg-[#012f2f] hover:bg-[#024646] text-white font-semibold py-2 rounded-lg transition-colors duration-200" %>
+  </div>
+<% end %>
+

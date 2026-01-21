@@ -1,0 +1,11 @@
+<% content_for :title, "New bookkeeping" %>
+
+<h1>New bookkeeping</h1>
+
+<%= render "form", bookkeeping: @bookkeeping %>
+
+<br>
+
+<div>
+  <%= link_to "Back to bookkeepings", admin_bookkeepings_path %>
+</div>

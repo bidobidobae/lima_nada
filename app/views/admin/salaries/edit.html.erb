@@ -1,0 +1,36 @@
+<h2 class="text-2xl font-bold mb-6"><%= action_name == "new" ? "Buat Gaji Baru" : "Edit Gaji" %></h2>
+
+<%= form_with model: [:admin, @salary], local: true, class: "max-w-xl mx-auto bg-white p-6 shadow rounded space-y-4" do |f| %>
+  <div>
+    <%= f.label :user_id, "Penerima Gaji", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.collection_select :user_id, User.where(role: [:teacher, :staff, :volunteer]), :id, :name, {}, class: "mt-1 w-full border p-2 rounded" %>
+  </div>
+
+  <div>
+    <%= f.label :salary_type, "Tipe Gaji", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :salary_type, Salary.salary_types.keys.map { |s| [s.titleize, s] }, {}, class: "mt-1 w-full border p-2 rounded" %>
+  </div>
+
+  <div>
+    <%= f.label :amount, "Nominal (atau rate per meeting)", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.number_field :amount, class: "mt-1 w-full border p-2 rounded" %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :month, "Bulan", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :month, in: 1..12, class: "mt-1 w-full border p-2 rounded" %>
+    </div>
+    <div>
+      <%= f.label :year, "Tahun", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.number_field :year, value: Time.current.year, class: "mt-1 w-full border p-2 rounded" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :status, "Status Pembayaran", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :status, Salary.statuses.keys.map { |s| [s.titleize, s] }, {}, class: "mt-1 w-full border p-2 rounded" %>
+  </div>
+
+  <%= f.submit "Simpan", class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" %>
+<% end %>

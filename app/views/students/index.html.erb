@@ -1,0 +1,51 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Students" %>
+
+<div class="container mx-auto px-4 py-6">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Daftar Murid</h1>
+    <%= link_to "Tambah Murid", new_student_path, class: "bg-[#012f2f] hover:bg-[#024646] text-white font-semibold p-2 rounded-lg transition-colors duration-200" %>
+  </div>
+  <div class="overflow-x-auto">
+    <table class="min-w-full divide-y divide-gray-200 bg-white shadow-md rounded-lg overflow-hidden">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Contact Person</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Latest Invoice Status</th>
+          <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Amount</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <% @students.each do |student| %>
+          <tr
+            class="hover:bg-blue-50 cursor-pointer transition-colors duration-150"
+            onclick="window.location='<%= student_path(student) %>'"
+          >
+            <td class="px-6 py-4 text-sm text-gray-800 font-medium"><%= student.name %></td>
+            <td class="px-6 py-4 text-sm text-gray-600"><%= student.contact_person %></td>
+            <td class="px-6 py-4 text-sm">
+              <% latest_invoice = student.invoices.order(created_at: :desc).first %>
+              <% if latest_invoice&.status == "paid" %>
+                <span class="text-green-700 font-semibold bg-green-100 px-2 py-1 rounded">Paid</span>
+              <% elsif latest_invoice&.status == "pending" %>
+                <span class="text-yellow-700 font-semibold bg-yellow-100 px-2 py-1 rounded">Pending</span>
+              <% else %>
+                <span class="text-gray-500">N/A</span>
+              <% end %>
+            </td>
+            <td class="px-6 py-4 text-sm text-gray-800">
+              <% if latest_invoice %>
+                Rp. <%= number_to_currency(latest_invoice.amount, unit: "", precision: 0, delimiter: ".") %>
+              <% else %>
+                -
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+
+    </table>
+  </div>
+</div>
