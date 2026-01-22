@@ -17,6 +17,6 @@ test:
   password: <%= ENV["PGPASSWORD"] %>
 
 production:
-  <<: *default
   url: <%= ENV["DATABASE_URL"] %>
+  prepared_statements: false
 
